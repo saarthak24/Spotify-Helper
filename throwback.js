@@ -1,9 +1,21 @@
 var access_token;
 var _baseUri = 'https://api.spotify.com/v1';
-var output_div = $('#throwback-output');
+var output = $('#throwback-table');
 var release;
 var count = 0;
-var offset = 100;
+var offset = 0;
+
+function addRow(track, release) {
+    output.find('tbody')
+        .append($('<tr>')
+            .append($('<td>')
+                .append(track)
+            )
+            .append($('<td>')
+                .append(release)
+            )
+        );
+}
 
 (function() {
     /**
@@ -94,16 +106,16 @@ function createTB() {
                 },
                 async: false
             }).done(function(data2) {
-                release = parseInt(data2.release_date.substring(0,4));
+                release = parseInt(data2.release_date.substring(0, 4));
             });
             if (i != data.items.length - 1) {
-                if (release < 2010) {
-                    output_div.append(data.items[i].track.name + " - " + release + ", ");
+                if (release < 2011) {
+                    addRow(data.items[i].track.name, release);
                     count++;
                 }
             } else {
-                if (release < 2010) {
-                    output_div.append(data.items[i].track.name + " - " + release);
+                if (release < 2011) {
+                    addRow(data.items[i].track.name, release);
                     count++;
                 }
             }

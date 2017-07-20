@@ -13,6 +13,7 @@ body {
     min-height: 100px;
 }
 
+
 /* ~~ Top Navigation Bar ~~ */
 
 #navigation-container {
@@ -49,7 +50,7 @@ body {
 }
 
 .sub-header {
-    font-style: italic; 
+    font-style: italic;
 }
 
 .navigation-title {
@@ -60,8 +61,8 @@ body {
 .log-in {
     position: absolute;
     top: 50%;
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    text-align: center;
 }
 
 #login, #loggedin {
