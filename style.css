@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 15vh 0 0 0;
+    font-family: font-family: 'Noto Serif', serif;
+}
+
+.logo {
+    float: left;
+    max-height: 15vh;
+    height: auto;
+    width: auto;
+    display: inline-block;
+    min-height: 100px;
+}
+
+/* ~~ Top Navigation Bar ~~ */
+
+#navigation-container {
+    margin: 0 auto;
+}
+
+.navigation-bar {
+    background-color: black;
+    width: 100%;
+    text-align: center;
+    top: 0px;
+    height: 15vh;
+    color: white;
+    position: fixed;
+    min-height: 100px;
+    font-family: 'Roboto', sans-serif;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.navigation-bar img {
+    float: left;
+}
+
+.navigation-bar a {
+    text-decoration: underline;
+    color: inherit;
+}
+
+.header {
+    margin: 0 !important;
+    padding-top: 15px;
+    text-transform: uppercase;
+}
+
+.sub-header {
+    font-style: italic; 
+}
+
+.navigation-title {
+    float: right;
+    padding-right: 10px;
+}
+
+.log-in {
+    position: absolute;
+    top: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+#login, #loggedin {
+    display: none;
+    font-family: font-family: 'Noto Serif', serif !important;
+}
+
+#loggedin {
+    padding-left: 10vh;
+    padding-right: 10vh;
+}
+
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 500px;
+}
