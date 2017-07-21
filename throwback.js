@@ -132,7 +132,7 @@ function findTB() {
                         'Authorization': 'Bearer ' + access_token
                     },
                     async: false
-                }).done(function(data2){
+                }).done(function(data2) {
                     release = parseInt(data2.release_date.substring(0, 4));
                 });
                 if (release < 2011) {
@@ -150,16 +150,21 @@ function findTB() {
         });
         offset += 100;
     }
-    console.log(count);
     console.log(throwbackTracks);
+    $('#playlist-button').css('visibility', 'visible');
 }
 
 function populateTB() {
-    $.ajax({
-        type: 'post',
-        url: _baseUri + '/users' + '/1263763228' + '/playlists' + '/7n5WIM72obbiV46ahaUKXZ' + '/tracks',
-        headers: {
-            'Authorization': 'Bearer ' + access_token
-        }
-    })
+    for (i = 0; i < throwbackTracks.length; i++) {
+        curTrack = throwbackTracks[i];
+        $.ajax({
+            dataType: 'text',
+            type: 'post',
+            async: false,
+            url: _baseUri + '/users' + '/1263763228' + '/playlists' + '/7n5WIM72obbiV46ahaUKXZ' + '/tracks' + '?uris=spotify:track:' + curTrack.id,
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            }
+        })
+    }
 }

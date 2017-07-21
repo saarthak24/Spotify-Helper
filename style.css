@@ -81,3 +81,7 @@ body {
     white-space: nowrap;
     width: 500px;
 }
+
+#playlist-button {
+    visibility: hidden;
+}
