@@ -4,10 +4,36 @@ var output = $('#throwback-table');
 var release;
 var count = 0;
 var offset = 0;
+var curTrack;
+var throwbackTracks = [];
 
 function addRow(track, release) {
     output.find('tbody')
         .append($('<tr>')
+            .append($('<td>')
+                .append(track)
+            )
+            .append($('<td>')
+                .append(release)
+            )
+        );
+}
+
+function addDangerRow(track, release) {
+    output.find('tbody')
+        .append($('<tr class="danger">')
+            .append($('<td>')
+                .append(track)
+            )
+            .append($('<td>')
+                .append(release)
+            )
+        );
+}
+
+function addSuccessRow(track, release) {
+    output.find('tbody')
+        .append($('<tr class="success">')
             .append($('<td>')
                 .append(track)
             )
@@ -91,35 +117,49 @@ function addRow(track, release) {
     }
 })();
 
-function createTB() {
-    $.ajax({
-        url: _baseUri + '/users' + '/1263763228' + '/playlists' + '/2H0uq1kt3Rrjqer1g9t6d1' + '/tracks' + '?offset=' + offset,
-        headers: {
-            'Authorization': 'Bearer ' + access_token
-        }
-    }).done(function(data) {
-        for (i = 0; i < data.items.length; i++) {
-            $.ajax({
-                url: _baseUri + '/albums/' + data.items[i].track.album.id,
-                headers: {
-                    'Authorization': 'Bearer ' + access_token
-                },
-                async: false
-            }).done(function(data2) {
-                release = parseInt(data2.release_date.substring(0, 4));
-            });
-            if (i != data.items.length - 1) {
+function findTB() {
+    while (offset <= 1800) {
+        $.ajax({
+            url: _baseUri + '/users' + '/1263763228' + '/playlists' + '/2H0uq1kt3Rrjqer1g9t6d1' + '/tracks' + '?offset=' + offset,
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            }
+        }).done(function(data) {
+            for (i = 0; i < data.items.length; i++) {
+                $.ajax({
+                    url: _baseUri + '/albums/' + data.items[i].track.album.id,
+                    headers: {
+                        'Authorization': 'Bearer ' + access_token
+                    },
+                    async: false
+                }).done(function(data2){
+                    release = parseInt(data2.release_date.substring(0, 4));
+                });
                 if (release < 2011) {
-                    addRow(data.items[i].track.name, release);
-                    count++;
-                }
-            } else {
-                if (release < 2011) {
-                    addRow(data.items[i].track.name, release);
+                    if (release >= 2010)
+                        addDangerRow(data.items[i].track.name, release);
+                    else if (release <= 2000)
+                        addSuccessRow(data.items[i].track.name, release);
+                    else {
+                        addRow(data.items[i].track.name, release);
+                    }
+                    throwbackTracks.push(data.items[i].track)
                     count++;
                 }
             }
+        });
+        offset += 100;
+    }
+    console.log(count);
+    console.log(throwbackTracks);
+}
+
+function populateTB() {
+    $.ajax({
+        type: 'post',
+        url: _baseUri + '/users' + '/1263763228' + '/playlists' + '/7n5WIM72obbiV46ahaUKXZ' + '/tracks',
+        headers: {
+            'Authorization': 'Bearer ' + access_token
         }
-        console.log(count);
-    });
+    })
 }
